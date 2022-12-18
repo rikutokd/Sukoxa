@@ -4,8 +4,12 @@ include __DIR__.'/vendor/autoload.php';
 
 use Discord\Discord;
 use Discord\Parts\Channel\Message;
+use Discord\Parts\Channel\Channel;
+use Discord\Parts\User\Member;
 use Discord\WebSockets\Intents;
 use Discord\WebSockets\Event;
+
+use sukoxa\DiscordUtil;
 
 // .envを使用する
 Dotenv\Dotenv::createImmutable(__DIR__)->load();
@@ -64,7 +68,20 @@ $discord->on('ready', function (Discord $discord) {
         }
 
         if ($message->content == '!s音楽かけて') {
+            try {
+                $author = $message->author;
+                //var_dump($author);
 
+                $voiceChannel = $message->member->getVoiceChannel();
+
+                var_dump($voiceChannel);
+                var_dump($voiceChannel->id);
+
+                $discord->joinVoiceChannel($voiceChannel);
+
+            } catch (\Throwable $th) {
+                $message->reply('ボイスチャンネルに接続出来ませんでした');
+            }
         }
 
     });
