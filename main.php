@@ -69,13 +69,9 @@ $discord->on('ready', function (Discord $discord) {
 
         if ($message->content == '!s音楽かけて') {
             try {
-                $author = $message->author;
-                //var_dump($author);
-
                 $voiceChannel = $message->member->getVoiceChannel();
 
                 var_dump($voiceChannel);
-                var_dump($voiceChannel->id);
 
                 $discord->joinVoiceChannel($voiceChannel);
 
