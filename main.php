@@ -38,31 +38,33 @@ $discord->on('ready', function (Discord $discord) {
         }
 
         if ($message->content == '!sおみくじ') {
+            $channel = $message->channel;
+            $channel->broadcastTyping();
             $num = rand(0,99);
             switch ($num) {
                 case $num == 0 || $num == 1 :
-                    $message->reply('おみくじを引いた…………結果はむすこ');
+                    $message->delayedReply('おみくじを引いた…………結果はむすこ',1500);
                     break;
                 case $num >= 2 && $num <= 17 :
-                    $message->reply('おみくじを引いた…………結果は大すこ');
+                    $message->delayedReply('おみくじを引いた…………結果は大すこ',1500);
                     break;
                 case $num >= 18 && $num <= 34 :
-                    $message->reply('おみくじを引いた…………結果は中すこ');
+                    $message->delayedReply('おみくじを引いた…………結果は中すこ',1500);
                     break;
                 case $num >= 35 && $num <= 50 :
-                    $message->reply('おみくじを引いた…………結果はすこ');
+                    $message->delayedReply('おみくじを引いた…………結果はすこ',1500);
                     break;
                 case $num >= 51 && $num <= 66 :
-                    $message->reply('おみくじを引いた…………結果は大凶');
+                    $message->delayedReply('おみくじを引いた…………結果は大凶',1500);
                     break;
                 case $num >= 67 && $num <= 82 :
-                    $message->reply('おみくじを引いた…………結果は中凶');
+                    $message->delayedReply('おみくじを引いた…………結果は中凶',1500);
                     break;
                 case $num >= 83 && $num <= 97 :
-                    $message->reply('おみくじを引いた…………結果は凶');
+                    $message->delayedReply('おみくじを引いた…………結果は凶',1500);
                     break;
                 case $num == 98 || $num == 99 :
-                    $message->reply('おみくじを引いた…………引けなかった！あはは');
+                    $message->delayedReply('おみくじを引いた…………引けなかった！あはは',1500);
                     break;
             }
         }
@@ -71,13 +73,20 @@ $discord->on('ready', function (Discord $discord) {
             try {
                 $voiceChannel = $message->member->getVoiceChannel();
 
-                var_dump($voiceChannel);
+                $discord->joinVoiceChannel($voiceChannel, $mute = false, $deaf = false);
 
-                $discord->joinVoiceChannel($voiceChannel);
+                // Create a VoiceClient
+                //$voiceClient = new VoiceClient();
 
             } catch (\Throwable $th) {
-                $message->reply('ボイスチャンネルに接続出来ませんでした');
+                //$message->reply('ボイスチャンネルに接続出来ませんでした');
             }
+        }
+
+        if ($message->content == '!sDebug') {
+            $channel = $message->channel;
+            var_dump($channel);
+            throw new Exception();
         }
 
     });
