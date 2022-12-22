@@ -69,24 +69,40 @@ $discord->on('ready', function (Discord $discord) {
             }
         }
 
-        if ($message->content == '!s音楽かけて') {
+        if ($message->content == '!s音') {
             try {
                 $voiceChannel = $message->member->getVoiceChannel();
 
-                $discord->joinVoiceChannel($voiceChannel, $mute = false, $deaf = false);
-
-                // Create a VoiceClient
-                //$voiceClient = new VoiceClient();
+                $discord->joinVoiceChannel($voiceChannel, false, false)->then(
+                    function (VoiceClient $vc) {  
+                        $vc->start();
+                        $vc->playFile('sound/1.mp3');
+                    }
+                );
 
             } catch (\Throwable $th) {
-                //$message->reply('ボイスチャンネルに接続出来ませんでした');
+                //$message->reply('error');
             }
         }
 
+        if ($message->content == '!sDC') {
+            try {
+                $guild_id = $message->member->guild_id;
+                $vc = $discord->getVoiceClient($guild_id);
+                $vc->close();
+            } catch (\Throwable $th) {
+                echo 'disconnect 失敗';
+            }
+
+        }
+
         if ($message->content == '!sDebug') {
-            $channel = $message->channel;
-            var_dump($channel);
-            throw new Exception();
+            try {
+                
+            } catch (\Throwable $th) {
+                echo 'エラー';
+            }
+
         }
 
     });
