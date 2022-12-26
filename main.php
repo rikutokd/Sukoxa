@@ -52,7 +52,7 @@ $discord->on('ready', function (Discord $discord) {
         }
 
         if ($message->content == 'システムコールコマンドリスト') {
-            $message->reply('このコマンドが使えるよ：!sおみくじ, !sバトルヒーリングスキル, システムコールコマンドリスト, システムコールジェネレートイルミネーション');
+            $message->reply('このコマンドが使えるよ：!sおみくじ, !sバトルヒーリングスキル, システムコールジェネレートイルミネーション');
         }
 
         if ($message->content == '!shutdown') {
@@ -95,8 +95,10 @@ $discord->on('ready', function (Discord $discord) {
             try {
                 $voiceChannel = $message->member->getVoiceChannel();
 
-                $discord->joinVoiceChannel($voiceChannel, false, false)->then(
-                    function (VoiceClient $vc) {  
+                $vc = $discord->joinVoiceChannel($voiceChannel, false, false);
+
+                print_r($vc);
+                $vc->done(function ($vc) {
                         $vc->start();
                         $vc->playFile('sound/1.mp3');
                     }
@@ -119,11 +121,14 @@ $discord->on('ready', function (Discord $discord) {
         }
 
         if ($message->content == '!sDebug') {
-                $guild = $discord->guilds->get("id", $myGuildID);
-                $members = $guild->members;
-                print_r($members);
-                $channels = $guild->channels;
-                print_r($channels);
+
+            //var_dump(file_exists('sound/1.mp3'));
+
+            $guild = $discord->guilds->get("id", $myGuildID);
+            $members = $guild->members;
+            print_r($members);
+            $channels = $guild->channels;
+            print_r($channels);
 
         }
 
