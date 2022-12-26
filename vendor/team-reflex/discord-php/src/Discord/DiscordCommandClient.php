@@ -16,7 +16,9 @@ use Discord\Parts\Embed\Embed;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Provides an easy way to have triggerable commands.
+ * Provides an easy way to have triggerable message based commands.
+ *
+ * @since 4.0.0
  */
 class DiscordCommandClient extends Discord
 {
@@ -119,6 +121,9 @@ class DiscordCommandClient extends Discord
                     }
 
                     $help = $command->getHelp($prefix);
+                    if (empty($help)) {
+                        return;
+                    }
 
                     $embed = new Embed($this);
                     $embed->setAuthor($this->commandClientOptions['name'], $this->client->user->avatar)
@@ -166,6 +171,9 @@ class DiscordCommandClient extends Discord
                 $embedfields = [];
                 foreach ($this->commands as $command) {
                     $help = $command->getHelp($prefix);
+                    if (empty($help)) {
+                        continue;
+                    }
                     $embedfields[] = [
                         'name' => $help['command'],
                         'value' => $help['description'],
@@ -201,9 +209,9 @@ class DiscordCommandClient extends Discord
     }
 
     /**
-     * Checks for a prefix in the message content, and returns the content
-     * of the message minus the prefix if a prefix was detected. If no prefix
-     * is detected, null is returned.
+     * Checks for a prefix in the message content, and returns the content of
+     * the message minus the prefix if a prefix was detected. If no prefix is
+     * detected, null is returned.
      *
      * @param string $content
      *
@@ -349,7 +357,8 @@ class DiscordCommandClient extends Discord
             $options['longDescription'],
             $options['usage'],
             $options['cooldown'],
-            $options['cooldownMessage']
+            $options['cooldownMessage'],
+            $options['showHelp']
         );
 
         return [$commandInstance, $options];
@@ -374,6 +383,7 @@ class DiscordCommandClient extends Discord
                 'aliases',
                 'cooldown',
                 'cooldownMessage',
+                'showHelp',
             ])
             ->setDefaults([
                 'description' => 'No description provided.',
@@ -382,6 +392,7 @@ class DiscordCommandClient extends Discord
                 'aliases' => [],
                 'cooldown' => 0,
                 'cooldownMessage' => 'please wait %d second(s) to use this command again.',
+                'showHelp' => true,
             ]);
 
         $options = $resolver->resolve($options);

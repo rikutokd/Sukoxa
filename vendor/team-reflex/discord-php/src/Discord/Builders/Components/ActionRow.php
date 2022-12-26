@@ -12,10 +12,13 @@
 namespace Discord\Builders\Components;
 
 /**
- * An Action Row is a non-interactive container component for other types of components.
+ * An Action Row is a non-interactive container component for other types of
+ * components.
  * It has a type: 1 and a sub-array of components of other types.
  *
- * @see https://discord.com/developers/docs/interactions/message-components#action-rows
+ * @link https://discord.com/developers/docs/interactions/message-components#action-rows
+ *
+ * @since 7.0.0
  */
 class ActionRow extends Component
 {
@@ -44,7 +47,7 @@ class ActionRow extends Component
      * @throws \InvalidArgumentException
      * @throws \OverflowException
      *
-     * @return self
+     * @return $this
      */
     public function addComponent(Component $component): self
     {
@@ -70,7 +73,7 @@ class ActionRow extends Component
      *
      * @param Component $component Component to remove.
      *
-     * @return self
+     * @return $this
      */
     public function removeComponent(Component $component): self
     {
@@ -84,7 +87,7 @@ class ActionRow extends Component
     /**
      * Removes all components from the action row.
      *
-     * @return self
+     * @return $this
      */
     public function clearComponents(): self
     {
@@ -104,7 +107,7 @@ class ActionRow extends Component
     }
 
     /**
-     * @inheritdoc
+     * {@inheritDoc}
      */
     public function jsonSerialize(): array
     {

@@ -20,10 +20,13 @@ use React\Promise\PromiseInterface;
 use function Discord\poly_strlen;
 
 /**
- * Buttons are interactive components that render on messages.
- * They can be clicked by users, and send an interaction to your app when clicked.
+ * Buttons are interactive components that render in messages.
+ * They can be clicked by users, and send an interaction to your app when
+ * clicked.
  *
- * @see https://discord.com/developers/docs/interactions/message-components#buttons
+ * @link https://discord.com/developers/docs/interactions/message-components#buttons
+ *
+ * @since 7.0.0
  */
 class Button extends Component
 {
@@ -138,7 +141,7 @@ class Button extends Component
      *
      * @throws \InvalidArgumentException
      *
-     * @return self
+     * @return $this
      */
     public function setStyle(int $style): self
     {
@@ -170,7 +173,7 @@ class Button extends Component
      *
      * @throws \LengthException
      *
-     * @return self
+     * @return $this
      */
     public function setLabel(?string $label): self
     {
@@ -184,11 +187,11 @@ class Button extends Component
     }
 
     /**
-     * Sets the emoji of the button. Null to clear.
+     * Sets the emoji of the button.
      *
-     * @param Emoji|string|null $emoji Emoji to set.
+     * @param Emoji|string|null $emoji Emoji to set. `null` to clear.
      *
-     * @return self
+     * @return $this
      */
     public function setEmoji($emoji): self
     {
@@ -235,7 +238,7 @@ class Button extends Component
      * @throws \LogicException
      * @throws \LengthException
      *
-     * @return self
+     * @return $this
      */
     public function setCustomId(?string $custom_id): self
     {
@@ -259,7 +262,7 @@ class Button extends Component
      *
      * @throws \LogicException
      *
-     * @return self
+     * @return $this
      */
     public function setUrl(?string $url): self
     {
@@ -277,7 +280,7 @@ class Button extends Component
      *
      * @param bool $disabled
      *
-     * @return self
+     * @return $this
      */
     public function setDisabled(bool $disabled): self
     {
@@ -306,7 +309,7 @@ class Button extends Component
      *
      * @throws \LogicException
      *
-     * @return self
+     * @return $this
      */
     public function setListener(?callable $callback, Discord $discord, bool $oneOff = false): self
     {
@@ -360,7 +363,7 @@ class Button extends Component
     /**
      * Removes the listener from the button.
      *
-     * @return self
+     * @return $this
      */
     public function removeListener(): self
     {
@@ -428,7 +431,7 @@ class Button extends Component
     }
 
     /**
-     * @inheritdoc
+     * {@inheritDoc}
      */
     public function jsonSerialize(): array
     {

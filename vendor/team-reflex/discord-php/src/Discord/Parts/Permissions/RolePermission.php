@@ -12,7 +12,9 @@
 namespace Discord\Parts\Permissions;
 
 /**
- * @inheritdoc
+ * Represents a set of permissions for a given role.
+ *
+ * @since 2.1.3
  *
  * @property bool $add_reactions
  * @property bool $priority_speaker
@@ -39,7 +41,7 @@ namespace Discord\Parts\Permissions;
  * @property bool $create_private_threads
  * @property bool $use_external_stickers
  * @property bool $send_messages_in_threads
- * @property bool $start_embedded_activities @todo $use_embedded_activities
+ * @property bool $use_embedded_activities
  *
  * @property bool $kick_members
  * @property bool $ban_members
@@ -51,11 +53,12 @@ namespace Discord\Parts\Permissions;
  * @property bool $manage_nicknames
  * @property bool $manage_emojis_and_stickers
  * @property bool $moderate_members
+ * @property bool $view_creator_monetization_analytics
  */
 class RolePermission extends Permission
 {
     /**
-     * @inheritdoc
+     * {@inheritDoc}
      */
     public static function getPermissions(): array
     {

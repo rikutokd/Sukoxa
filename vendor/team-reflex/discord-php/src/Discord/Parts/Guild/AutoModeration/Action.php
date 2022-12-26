@@ -16,7 +16,9 @@ use Discord\Parts\Part;
 /**
  * An action which will execute whenever a rule is triggered.
  *
- * @see https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-action-object
+ * @link https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-action-object
+ *
+ * @since 7.1.0
  *
  * @property int         $type     The type of action.
  * @property object|null $metadata Additional metadata needed during execution for this specific action type (may contain `channel_id` and `duration_seconds`).
@@ -24,7 +26,7 @@ use Discord\Parts\Part;
 class Action extends Part
 {
     /**
-     * @inheritdoc
+     * {@inheritDoc}
      */
     protected $fillable = [
         'type',
@@ -36,7 +38,9 @@ class Action extends Part
     public const TYPE_TIMEOUT = 3;
 
     /**
-     * @inheritdoc
+     * {@inheritDoc}
+     *
+     * @see Rule::getCreatableAttributes()
      */
     public function getCreatableAttributes(): array
     {

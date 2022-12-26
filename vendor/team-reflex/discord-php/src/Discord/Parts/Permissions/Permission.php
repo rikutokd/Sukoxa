@@ -12,13 +12,16 @@
 namespace Discord\Parts\Permissions;
 
 use Discord\Discord;
-use Discord\Helpers\Bitwise;
+use Discord\Helpers\BigInt;
 use Discord\Parts\Part;
 
 /**
  * Permission represents a set of permissions for a given role or overwrite.
  *
- * @see https://discord.com/developers/docs/topics/permissions
+ * @link https://discord.com/developers/docs/topics/permissions
+ *
+ * @since 2.1.3 Namespace moved from Guild to Permissions
+ * @since 2.0.0
  *
  * @property int|string $bitwise
  * @property bool       $create_instant_invite
@@ -70,7 +73,7 @@ abstract class Permission extends Part
         'manage_webhooks' => 29,
         'manage_events' => 33,
         'use_external_stickers' => 37,
-        'start_embedded_activities' => 39, // @todo use_embedded_activities
+        'use_embedded_activities' => 39,
     ];
 
     /**
@@ -114,6 +117,7 @@ abstract class Permission extends Part
         'manage_nicknames' => 27,
         'manage_emojis_and_stickers' => 30,
         'moderate_members' => 40,
+        'view_creator_monetization_analytics' => 41,
     ];
 
     /**
@@ -138,7 +142,7 @@ abstract class Permission extends Part
     private $permissions = [];
 
     /**
-     * @inheritdoc
+     * {@inheritDoc}
      */
     public function __construct(Discord $discord, array $attributes = [], bool $created = false)
     {
@@ -165,13 +169,13 @@ abstract class Permission extends Part
     /**
      * Gets the bitwise attribute of the permission.
      *
-     * @see https://discord.com/developers/docs/topics/permissions#permissions-bitwise-permission-flags
+     * @link https://discord.com/developers/docs/topics/permissions#permissions-bitwise-permission-flags
      *
      * @return int|string
      */
     protected function getBitwiseAttribute()
     {
-        if (Bitwise::is32BitWithGMP()) { // x86 with GMP
+        if (BigInt::is32BitWithGMP()) { // x86 with GMP
             $bitwise = \gmp_init(0);
 
             foreach ($this->permissions as $permission => $value) {
@@ -195,7 +199,7 @@ abstract class Permission extends Part
     /**
      * Sets the bitwise attribute of the permission.
      *
-     * @see https://discord.com/developers/docs/topics/permissions#permissions-bitwise-permission-flags
+     * @link https://discord.com/developers/docs/topics/permissions#permissions-bitwise-permission-flags
      *
      * @param int|string $bitwise
      */
@@ -206,111 +210,12 @@ abstract class Permission extends Part
         }
 
         foreach ($this->permissions as $permission => $value) {
-            if (Bitwise::test($bitwise, $value)) {
-                $this->attributes[$permission] = true;
-            } else {
-                $this->attributes[$permission] = false;
-            }
+            $this->attributes[$permission] = BigInt::test($bitwise, $value);
         }
     }
 
-    /**
-     * @inheritdoc
-     *
-     * @todo replace start_embedded_activities in next major version
-     */
-    protected function getUseEmbeddedActivitiesAttribute()
+    public function __toString(): string
     {
-        return $this->attributes['start_embedded_activities'] ?? null;
-    }
-
-    /**
-     * @inheritdoc
-     *
-     * @todo replace start_embedded_activities in next major version
-     */
-    protected function setUseEmbeddedActivitiesAttribute($value)
-    {
-        $this->attributes['start_embedded_activities'] = $value;
-    }
-
-    /**
-     * @inheritdoc
-     *
-     * @deprecated 7.0.0 Use `use_application_commands`
-     */
-    protected function getUseSlashCommandsAttribute()
-    {
-        return $this->attributes['use_application_commands'] ?? null;
-    }
-
-    /**
-     * @inheritdoc
-     *
-     * @deprecated 7.0.0 Use `create_public_threads`
-     */
-    protected function getUsePublicThreadsAttribute()
-    {
-        return $this->attributes['create_public_threads'] ?? null;
-    }
-
-    /**
-     * @inheritdoc
-     *
-     * @deprecated 7.0.0 Use `create_private_threads`
-     */
-    protected function getUsePrivateThreadsAttribute()
-    {
-        return $this->attributes['create_private_threads'] ?? null;
-    }
-
-    /**
-     * @inheritdoc
-     *
-     * @deprecated 7.0.0 Use `manage_emojis_and_stickers`
-     */
-    protected function getManageEmojisAttribute()
-    {
-        return $this->attributes['manage_emojis_and_stickers'] ?? null;
-    }
-
-    /**
-     * @inheritdoc
-     *
-     * @deprecated 7.0.0 Use `use_application_commands`
-     */
-    protected function setUseSlashCommandsAttribute($value)
-    {
-        return $this->attributes['use_application_commands'] = $value;
-    }
-
-    /**
-     * @inheritdoc
-     *
-     * @deprecated 7.0.0 Use `create_public_threads`
-     */
-    protected function setUsePublicThreadsAttribute($value)
-    {
-        return $this->attributes['create_public_threads'] = $value;
-    }
-
-    /**
-     * @inheritdoc
-     *
-     * @deprecated 7.0.0 Use `create_private_threads`
-     */
-    protected function setUsePrivateThreadsAttribute($value)
-    {
-        return $this->attributes['create_private_threads'] = $value;
-    }
-
-    /**
-     * @inheritdoc
-     *
-     * @deprecated 7.0.0 Use `manage_emojis_and_stickers`
-     */
-    protected function setManageEmojisAttribute($value)
-    {
-        return $this->attributes['manage_emojis_and_stickers'] = $value;
+        return (string) $this->bitwise;
     }
 }

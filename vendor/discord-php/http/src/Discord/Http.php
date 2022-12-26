@@ -38,14 +38,14 @@ class Http
      *
      * @var string
      */
-    public const VERSION = 'v9.1.8';
+    public const VERSION = 'v10.1.7';
 
     /**
      * Current Discord HTTP API version.
      *
      * @var string
      */
-    public const HTTP_API_VERSION = 9;
+    public const HTTP_API_VERSION = 10;
 
     /**
      * Discord API base URL.

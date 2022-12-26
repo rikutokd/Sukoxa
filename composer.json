@@ -7,6 +7,6 @@
     },
     "require": {
         "vlucas/phpdotenv": "^5.5",
-        "team-reflex/discord-php": "^7.3"
+        "team-reflex/discord-php": "10.0.0-RC4"
     }
 }

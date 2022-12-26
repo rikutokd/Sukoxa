@@ -92,21 +92,20 @@ $discord->on('ready', function (Discord $discord) {
         }
 
         if ($message->content == '!s音') {
-            try {
-                $voiceChannel = $message->member->getVoiceChannel();
-
-                $vc = $discord->joinVoiceChannel($voiceChannel, false, false);
-
-                print_r($vc);
-                $vc->done(function ($vc) {
-                        $vc->start();
-                        $vc->playFile('sound/1.mp3');
-                    }
-                );
-
-            } catch (\Throwable $th) {
-                //$message->reply('error');
-            }
+            $voiceChannel = $message->member->getVoiceChannel();
+        
+            $vc = $discord->joinVoiceChannel($voiceChannel, false, false);
+        
+            print_r($vc);
+            $vc->done(
+                function ($vc) {
+                    var_dump(file_exists('sound/1.mp3'));
+                    $vc->playFile('sound/1.mp3');
+                },
+                function (\Throwable $th) {
+                    //$message->reply('error');
+                }
+            );
         }
 
         if ($message->content == '!sDC') {
@@ -121,9 +120,6 @@ $discord->on('ready', function (Discord $discord) {
         }
 
         if ($message->content == '!sDebug') {
-
-            //var_dump(file_exists('sound/1.mp3'));
-
             $guild = $discord->guilds->get("id", $myGuildID);
             $members = $guild->members;
             print_r($members);

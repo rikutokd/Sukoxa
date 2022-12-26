@@ -69,8 +69,6 @@ class Endpoint
     // POST
     public const CHANNEL_MESSAGE_THREADS = self::CHANNEL_MESSAGE.'/threads';
     // GET
-    public const CHANNEL_THREADS_ACTIVE = self::CHANNEL_THREADS.'/active';
-    // GET
     public const CHANNEL_THREADS_ARCHIVED_PUBLIC = self::CHANNEL_THREADS.'/archived/public';
     // GET
     public const CHANNEL_THREADS_ARCHIVED_PRIVATE = self::CHANNEL_THREADS.'/archived/private';
@@ -104,6 +102,8 @@ class Endpoint
     public const GUILD = 'guilds/:guild_id';
     // GET, POST, PATCH
     public const GUILD_CHANNELS = self::GUILD.'/channels';
+    // GET
+    public const GUILD_THREADS_ACTIVE = self::GUILD.'/threads/active';
 
     // GET
     public const GUILD_MEMBERS = self::GUILD.'/members';
@@ -295,7 +295,7 @@ class Endpoint
     public function __construct(string $endpoint)
     {
         $this->endpoint = $endpoint;
-    
+
         if (preg_match_all(self::REGEX, $endpoint, $vars)) {
             $this->vars = $vars[1] ?? [];
         }
@@ -343,7 +343,7 @@ class Endpoint
 
         $this->query[$key] = $value;
     }
-    
+
     /**
      * Converts the endpoint into the absolute endpoint with
      * placeholders replaced.
@@ -396,7 +396,7 @@ class Endpoint
     {
         $endpoint = new Endpoint($endpoint);
         $endpoint->bindArgs(...$args);
-        
+
         return $endpoint;
     }
 

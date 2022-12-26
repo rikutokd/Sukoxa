@@ -18,6 +18,8 @@ use JsonSerializable;
 /**
  * Helper class used to build application commands.
  *
+ * @since 7.0.0
+ *
  * @author Mark `PeanutNL` Versluis
  */
 class CommandBuilder implements JsonSerializable
@@ -32,6 +34,20 @@ class CommandBuilder implements JsonSerializable
     protected $type = Command::CHAT_INPUT;
 
     /**
+     * Name of the command.
+     *
+     * @var string
+     */
+    protected string $name;
+
+    /**
+     * Description of the command. should be emtpy if the type is not CHAT_INPUT.
+     *
+     * @var string
+     */
+    protected string $description;
+
+    /**
      * The default permission of the command. If true the command is enabled when the app is added to the guild.
      *
      * @var bool
@@ -41,7 +57,7 @@ class CommandBuilder implements JsonSerializable
     /**
      * Creates a new command builder.
      *
-     * @return self
+     * @return static
      */
     public static function new(): self
     {
@@ -95,7 +111,7 @@ class CommandBuilder implements JsonSerializable
     }
 
     /**
-     * @inheritdoc
+     * {@inheritDoc}
      */
     public function jsonSerialize(): array
     {

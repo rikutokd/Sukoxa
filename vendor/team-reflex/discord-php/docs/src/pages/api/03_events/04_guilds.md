@@ -8,13 +8,22 @@ Requires the `Intents::GUILDS` intent.
 
 Called with a `Guild` object in one of the following situations:
 
-1. When the Bot is first starting and the guilds are becoming available.
+1. When the Bot is first starting and the guilds are becoming available. (unless the listener is put inside after 'ready' event)
 2. When a guild was unavailable and is now available due to an outage.
 3. When the Bot joins a new guild.
 
 ```php
-$discord->on(Event::GUILD_CREATE, function (Guild $guild, Discord $discord) {
-    // ...
+$discord->on(Event::GUILD_CREATE, function (object $guild, Discord $discord) {
+    if (! ($guild instanceof Guild)) {
+        // the guild is unavailable due to an outage, $guild is a stdClass
+        // {
+        //     "id": "",
+        //     "unavailable": true,
+        // }
+        return;
+    }
+
+    // the Bot has joined the guild
 });
 ```
 
@@ -39,10 +48,10 @@ Called with a `Guild` object in one of the following situations:
 $discord->on(Event::GUILD_DELETE, function (object $guild, Discord $discord, bool $unavailable) {
     // ...
     if ($unavailable) {
-        // the guild is unavailabe due to an outage
+        // the guild is unavailabe due to an outage, $guild is a stdClass
         // {
-        //     "id": "" // guild ID
-        //     "unavailable": true
+        //     "guild_id": "",
+        //     "unavailable": "",
         // }
     } else {
         // the Bot has been kicked from the guild
@@ -164,9 +173,9 @@ Called with a `Role` object when a role is deleted in a guild. `$role` may retur
 ```php
 $discord->on(Event::GUILD_ROLE_DELETE, function (object $role, Discord $discord) {
     if ($role instanceof Role) {
-        // Role is present in cache
+        // $role was cached
     }
-    // If the role is not present in the cache:
+    // $role was not in cache:
     else {
         // {
         //     "guild_id": "" // role guild ID
@@ -239,8 +248,16 @@ Requires the `Intents::GUILD_INTEGRATIONS` intent.
 Called with a cached `Guild` object when a guild integration is updated.
 
 ```php
-$discord->on(Event::GUILD_INTEGRATIONS_UPDATE, function (?Guild $guild, Discord $discord) {
-    // ...
+$discord->on(Event::GUILD_INTEGRATIONS_UPDATE, function (object $guild, Discord $discord) {
+    if ($guild instanceof Guild) {
+        // $guild was cached
+    }
+    // $guild was not in cache:
+    else {
+        // {
+        //     "guild_id": "",
+        // }
+    }
 });
 ```
 
@@ -267,10 +284,19 @@ $discord->on(Event::INTEGRATION_UPDATE, function (Integration $integration, Disc
 ### Integration Delete
 
 Called with an old `Integration` object when a integration is deleted from a guild.
-`$integration` _may_ be `null` if Integration is not cached.
 
 ```php
-$discord->on(Event::INTEGRATION_DELETE, function (?Integration $integration, Discord $discord) {
-    // ...
+$discord->on(Event::INTEGRATION_DELETE, function (object $integration, Discord $discord) {
+    if ($integration instanceof Integration) {
+        // $integration was cached
+    }
+    // $integration was not in cache:
+    else {
+        // {
+        //     "id": "",
+        //     "guild_id": "",
+        //     "application_id": ""
+        // }
+    }
 });
 ```

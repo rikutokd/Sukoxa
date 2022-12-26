@@ -16,7 +16,9 @@ use function Discord\poly_strlen;
 /**
  * Text inputs are an interactive component that render on modals. They can be used to collect short-form or long-form text.
  *
- * @see https://discord.com/developers/docs/interactions/message-components#text-inputs
+ * @link https://discord.com/developers/docs/interactions/message-components#text-inputs
+ *
+ * @since 7.0.0
  */
 class TextInput extends Component
 {
@@ -114,7 +116,7 @@ class TextInput extends Component
      *
      * @throws \LengthException
      *
-     * @return self
+     * @return $this
      */
     public function setCustomId($custom_id): self
     {
@@ -134,7 +136,7 @@ class TextInput extends Component
      *
      * @throws \InvalidArgumentException
      *
-     * @return self
+     * @return $this
      */
     public function setStyle(int $style): self
     {
@@ -154,7 +156,7 @@ class TextInput extends Component
      *
      * @throws \LengthException
      *
-     * @return self
+     * @return $this
      */
     public function setLabel(string $label): self
     {
@@ -169,13 +171,12 @@ class TextInput extends Component
 
     /**
      * Sets the minimum input length for a text input.
-     * Minimum 0 and maximum 4000. Null to set as default.
      *
-     * @param int|null $min_length
+     * @param int|null $min_length Minimum `0` and maximum `4000`. `null` to set as default.
      *
      * @throws \LengthException
      *
-     * @return self
+     * @return $this
      */
     public function setMinLength(?int $min_length): self
     {
@@ -190,13 +191,12 @@ class TextInput extends Component
 
     /**
      * Sets the maximum input length for a text input.
-     * Minimum 1 and maximum 4000. Null to set as default.
      *
-     * @param int|null $max_length
+     * @param int|null $max_length Minimum `1` and maximum `4000`. `null` to set as default.
      *
      * @throws \LengthException
      *
-     * @return self
+     * @return $this
      */
     public function setMaxLength(?int $max_length): self
     {
@@ -211,13 +211,12 @@ class TextInput extends Component
 
     /**
      * Sets the placeholder string to display if text input is empty.
-     * Maximum 100 characters. Null to clear placeholder.
      *
-     * @param string|null $placeholder
+     * @param string|null $placeholder Maximum 100 characters. `null` to clear placeholder.
      *
      * @throws \LengthException
      *
-     * @return self
+     * @return $this
      */
     public function setPlaceholder(?string $placeholder): self
     {
@@ -235,7 +234,7 @@ class TextInput extends Component
      *
      * @param bool $required
      *
-     * @return self
+     * @return $this
      */
     public function setRequired(bool $required): self
     {
@@ -251,7 +250,7 @@ class TextInput extends Component
      *
      * @throws \LengthException
      *
-     * @return self
+     * @return $this
      */
     public function setValue(?string $value): self
     {
@@ -315,7 +314,7 @@ class TextInput extends Component
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function jsonSerialize(): array
     {
@@ -332,7 +331,7 @@ class TextInput extends Component
 
         if (isset($this->max_length)) {
             if (isset($this->min_length) && $this->min_length > $this->max_length) {
-                throw new \OutOfBoundsException('Minimum length cannot be higher than maximum length');
+                throw new \OutOfRangeException('Minimum length cannot be higher than maximum length');
             }
 
             $content['max_length'] = $this->max_length;

@@ -15,9 +15,8 @@ return array(
     'a4a119a56e50fbb293281d9a48007e0e' => $vendorDir . '/symfony/polyfill-php80/bootstrap.php',
     '6e3fae29631ef280660b3cdad06f25a8' => $vendorDir . '/symfony/deprecation-contracts/function.php',
     'a1105708a18b76903365ca1c4aa61b02' => $vendorDir . '/symfony/translation/Resources/functions.php',
-    '49d7e2e91a66e18467cc8d8b8b02459b' => $vendorDir . '/mollie/polyfill-libsodium/bootstrap.php',
     '3be16222a6efa6dd226a219eaaff823b' => $vendorDir . '/ratchet/pawl/src/functions_include.php',
-    '83835a8f9e1906eeec7f4923b03042b8' => $vendorDir . '/react/partial/src/functions.php',
+    'c4e03ecd470d2a87804979c0a8152284' => $vendorDir . '/react/async/src/functions_include.php',
     '320cde22f66dd4f5d3fd621d3e88b98f' => $vendorDir . '/symfony/polyfill-ctype/bootstrap.php',
     '864b292aadc96fda0e2642b894a38d16' => $vendorDir . '/team-reflex/discord-php/src/Discord/functions.php',
 );
