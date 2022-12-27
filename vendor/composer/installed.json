@@ -31,7 +31,7 @@
             },
             "time": "2022-12-13T12:11:40+00:00",
             "type": "library",
-            "installation-source": "source",
+            "installation-source": "dist",
             "autoload": {
                 "psr-4": {
                     "Discord\\Http\\": "src/Discord"
@@ -881,7 +881,7 @@
                     "dev-master": "1.0.x-dev"
                 }
             },
-            "installation-source": "source",
+            "installation-source": "dist",
             "autoload": {
                 "psr-4": {
                     "Psr\\SimpleCache\\": "src/"
@@ -1099,7 +1099,7 @@
             },
             "time": "2022-07-11T14:21:02+00:00",
             "type": "library",
-            "installation-source": "source",
+            "installation-source": "dist",
             "autoload": {
                 "files": [
                     "src/functions_include.php"
@@ -1340,7 +1340,7 @@
             },
             "time": "2022-12-05T13:45:40+00:00",
             "type": "library",
-            "installation-source": "source",
+            "installation-source": "dist",
             "autoload": {
                 "psr-4": {
                     "React\\Datagram\\": "src/"
@@ -2778,7 +2778,7 @@
             },
             "time": "2022-12-24T07:30:17+00:00",
             "type": "library",
-            "installation-source": "source",
+            "installation-source": "dist",
             "autoload": {
                 "files": [
                     "src/Discord/functions.php"

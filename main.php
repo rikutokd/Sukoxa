@@ -12,10 +12,10 @@ use Discord\WebSockets\Intents;
 use Discord\WebSockets\Event;
 use Discord\Helpers\Collection;
 use Discord\Repository\Channel\WebhookRepository;
+use Dotenv\Dotenv;
 
-
-// .envを使用する
-Dotenv\Dotenv::createImmutable(__DIR__)->load();
+$dotenv = Dotenv::createImmutable(__DIR__);
+$dotenv->load();
 
 $tokenID = $_ENV['tokenID'];
 $myGuildID = $_ENV['myGuildID'];
@@ -91,7 +91,7 @@ $discord->on('ready', function (Discord $discord) {
             }
         }
 
-        if ($message->content == '!s音') {
+        if ($message->content == '!sクリスマスソング') {
             $voiceChannel = $message->member->getVoiceChannel();
         
             $vc = $discord->joinVoiceChannel($voiceChannel, false, false);

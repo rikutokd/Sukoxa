@@ -3,7 +3,7 @@
         'name' => '1/bot',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '9714c843ad7b11616233598dd486fa97994a147d',
+        'reference' => 'e1a1d46cca0a22ab1060f9b3d7ac2ac00d865b76',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         '1/bot' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '9714c843ad7b11616233598dd486fa97994a147d',
+            'reference' => 'e1a1d46cca0a22ab1060f9b3d7ac2ac00d865b76',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
