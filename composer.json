@@ -1,0 +1,12 @@
+{
+    "name": "1/bot",
+    "autoload": {
+        "psr-4": {
+            "1\\Bot\\": "src/"
+        }
+    },
+    "require": {
+        "vlucas/phpdotenv": "^5.5",
+        "team-reflex/discord-php": "10.0.0-RC4"
+    }
+}
