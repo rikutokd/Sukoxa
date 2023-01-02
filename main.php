@@ -3,6 +3,7 @@
 include __DIR__.'/vendor/autoload.php';
 
 use Discord\Discord;
+use Discord\Voice\VoiceClient;
 use Discord\Parts\Channel\Message;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\Webhook;
@@ -13,12 +14,18 @@ use Discord\WebSockets\Event;
 use Discord\Helpers\Collection;
 use Discord\Repository\Channel\WebhookRepository;
 use Dotenv\Dotenv;
+use React\Promise\Promise;
+use React\EventLoop\Loop;
+use React\Stream\ReadableStreamInterface;
+use React\Stream\ReadableResourceStream;
+use function React\Async\async;
+use function React\Async\await;
+
 
 $dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
 $tokenID = $_ENV['tokenID'];
-$myGuildID = $_ENV['myGuildID'];
 
 $discord = new \Discord\Discord([
     'token' => $tokenID,
@@ -32,14 +39,8 @@ $discord->on('ready', function (Discord $discord) {
     // Listen for messages
     $discord->on('message', function (Message $message, Discord $discord) {
 
-
-        if ($message->content == '!sバトルヒーリングスキル') {
-            $message->reply('バトルヒーリングスキルによる自動回復が10秒で600ポイントある。'.
-            '何時間攻撃しても俺は倒せないよ。');
-        }
-
         if ($message->content == '!sCommand') {
-            $message->reply('このコマンドが使えるよ：!sおみくじ, !sバトルヒーリングスキル, システムコールコマンドリスト, システムコールジェネレートイルミネーション');
+            $message->reply('このコマンドが使えるよ：!sおみくじ, システムコールコマンドリスト, システムコールジェネレートイルミネーション');
         }
 
         if ($message->content == 'システムコールジェネレートイルミネーション') {
@@ -52,7 +53,7 @@ $discord->on('ready', function (Discord $discord) {
         }
 
         if ($message->content == 'システムコールコマンドリスト') {
-            $message->reply('このコマンドが使えるよ：!sおみくじ, !sバトルヒーリングスキル, システムコールジェネレートイルミネーション');
+            $message->reply('このコマンドが使えるよ：!sおみくじ, システムコールジェネレートイルミネーション');
         }
 
         if ($message->content == '!shutdown') {
@@ -96,14 +97,10 @@ $discord->on('ready', function (Discord $discord) {
         
             $vc = $discord->joinVoiceChannel($voiceChannel, false, false);
         
-            print_r($vc);
             $vc->done(
                 function ($vc) {
                     var_dump(file_exists('sound/1.mp3'));
                     $vc->playFile('sound/1.mp3');
-                },
-                function (\Throwable $th) {
-                    //$message->reply('error');
                 }
             );
         }
@@ -120,11 +117,13 @@ $discord->on('ready', function (Discord $discord) {
         }
 
         if ($message->content == '!sDebug') {
+            //print_r($_ENV);
+            $myGuildID = $_ENV['myGuildID'];
             $guild = $discord->guilds->get("id", $myGuildID);
             $members = $guild->members;
             print_r($members);
             $channels = $guild->channels;
-            print_r($channels);
+            //print_r($channels);
 
         }
 
